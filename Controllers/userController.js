@@ -2,18 +2,17 @@ const jwtController = require("./jwtController");
 const createUser = require("../models/User");
 const {
   collection,
-  getDoc,
+  updateDoc,
   getDocs,
   query,
   where,
   limit,
-  doc,
 } = require("firebase/firestore");
 const { db } = require("../FirebaseApp");
+const UsersRef = collection(db, "Users");
 
 exports.Register = async (req, res) => {
   const { email, full_name, username, password } = req.body;
-  const UsersRef = collection(db, "Users");
   const usersQuery = query(UsersRef, where("username", "==", username));
   try {
     const usersSnapshot = await getDocs(usersQuery);
@@ -35,19 +34,17 @@ exports.Register = async (req, res) => {
 exports.Login = async (req, res) => {
   const { email, password } = req.body;
   const usersRef = collection(db, "Users");
-  const userQuery = query(usersRef, where("email", "==", email), limit(1));
+  const userQuery = query(UsersRef, where("email", "==", email), limit(1));
 
   try {
     const user = await getDocs(userQuery);
 
     if (user.empty) {
-      //if it does not exist create it
       return res.status(404).json({
         message: "User not found.",
       });
     }
 
-    // Compare the provided password with the stored hashed password
     const passwordMatch = await jwtController.comparePasswords(
       password,
       user.docs[0].data().password
@@ -57,12 +54,10 @@ exports.Login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials." });
     }
 
-    // Generate a JWT token
     const token = jwtController.generateToken({
       username: user.docs[0].data().username,
     });
 
-    // Send the token to the client
     res.json({ token });
   } catch (error) {
     console.error("Error during login:", error);
@@ -72,26 +67,79 @@ exports.Login = async (req, res) => {
 
 exports.UserProfile = async (req, res) => {
   const { username } = req.params;
-  const usersRef = collection(db, "Users");
   const userQuery = query(
-    usersRef,
+    UsersRef,
     where("username", "==", username),
     limit(1)
   );
   try {
     const user = await getDocs(userQuery);
     const userData = user.docs[0].data();
-    
-    if(userData.privacySettings.private){
+
+    if (userData.privacySettings.private) {
       res.json({
-        error: "This Account is private"
-      })
+        error: "This Account is private",
+      });
     }
     res.json({
       userName: userData.username,
+      userBio: userData.bio,
       number_of_posts: userData.number_of_posts,
       number_of_followers: userData.number_of_followers,
-      number_of_following: userData.number_of_followers,
-    })
+      number_of_following: userData.number_of_following,
+    });
   } catch (e) {}
+};
+
+exports.FollowUser = async (req, res) => {
+  const currentUser = req.username;
+  const userToFollow = req.params.username;
+
+  const userToFollowQuery = query(
+    UsersRef,
+    where("username", "==", userToFollow),
+    limit(1)
+  );
+  const currentUserQuery = query(
+    UsersRef,
+    where("username", "==", currentUser),
+    limit(1)
+  );
+  try {
+   const userToFollowSnapshot = await getDocs(userToFollowQuery);
+   const currentUserSnapshot = await getDocs(currentUserQuery);
+
+  const userToFollowData = userToFollowSnapshot.docs[0].data();
+  const currentUserData = currentUserSnapshot.docs[0].data();
+
+    await updateDoc(userToFollowSnapshot.docs[0].ref, {
+      number_of_followers: + 1,
+      relationShips: [
+        {
+          username: currentUserData.username,
+          relationShip_type: "follower",
+        },
+      ],
+    });
+
+    await updateDoc(currentUserSnapshot.docs[0].ref, {
+      number_of_following: + 1,
+      relationShips: [
+        {
+          username: userToFollowData.username,
+          relationShip_type: "following",
+        },
+      ],
+    });
+
+  res.json({
+    Message: "Success"
+  })
+  
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to log in.",
+      err,
+    });
+  }
 };
