@@ -7,6 +7,7 @@ const {
   query,
   where,
   limit,
+  doc,
 } = require("firebase/firestore");
 const { db } = require("../FirebaseApp");
 
@@ -34,11 +35,7 @@ exports.Register = async (req, res) => {
 exports.Login = async (req, res) => {
   const { email, password } = req.body;
   const usersRef = collection(db, "Users");
-  const userQuery = query(
-    usersRef,
-    where("email", "==", email),
-    limit(1)
-  );
+  const userQuery = query(usersRef, where("email", "==", email), limit(1));
 
   try {
     const user = await getDocs(userQuery);
@@ -61,7 +58,9 @@ exports.Login = async (req, res) => {
     }
 
     // Generate a JWT token
-    const token = jwtController.generateToken({ username: user.docs[0].data().username });
+    const token = jwtController.generateToken({
+      username: user.docs[0].data().username,
+    });
 
     // Send the token to the client
     res.json({ token });
@@ -69,4 +68,30 @@ exports.Login = async (req, res) => {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Failed to log in." });
   }
+};
+
+exports.UserProfile = async (req, res) => {
+  const { username } = req.params;
+  const usersRef = collection(db, "Users");
+  const userQuery = query(
+    usersRef,
+    where("username", "==", username),
+    limit(1)
+  );
+  try {
+    const user = await getDocs(userQuery);
+    const userData = user.docs[0].data();
+    
+    if(userData.privacySettings.private){
+      res.json({
+        error: "This Account is private"
+      })
+    }
+    res.json({
+      userName: userData.username,
+      number_of_posts: userData.number_of_posts,
+      number_of_followers: userData.number_of_followers,
+      number_of_following: userData.number_of_followers,
+    })
+  } catch (e) {}
 };
