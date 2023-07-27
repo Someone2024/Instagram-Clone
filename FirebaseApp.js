@@ -1,5 +1,6 @@
 const {initializeApp} = require("firebase/app")
 const { getFirestore } = require("firebase/firestore")
+const {collection} = require("firebase/firestore")
 require("dotenv").config
 
 const firebaseConfig = {
@@ -13,7 +14,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
+const UsersRef = collection(db, "Users");
 
 module.exports = {
-    db
+    db,
+    UsersRef
 }
