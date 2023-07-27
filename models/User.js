@@ -17,10 +17,7 @@ async function createUser(email, full_name, username, password) {
       liked_posts: [],
       relationShips: [],
       privacySettings: {
-        private: false,
-        posts: "",
-        followers: "",
-        following: ""
+        private_account: false,
       }
     });
     console.log("Document written with ID: ", userRef.id);
