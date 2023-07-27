@@ -14,7 +14,7 @@ router.post("/:username/follow", checkAuh, userController.FollowOrUnFollowUser)
 router.post("/:username/block", checkAuh, userController.BlockOrUnBlockUser)
 
 //PUT requests
-router.put("/settings/profile", checkAuh, userController.BlockOrUnBlockUser)
+router.put("/settings/profile", checkAuh, userController.UpdateUserProfile)
 router.put("/settings/privacy", checkAuh, userController.UpdateUserPrivacy)
 
 
