@@ -4,6 +4,10 @@ const {
   query,
   where,
   limit,
+  arrayRemove,
+  arrayUnion,
+  increment,
+  
 } = require("firebase/firestore");
 const { UsersRef } = require("../../FirebaseApp");
 
@@ -29,40 +33,43 @@ exports.FollowOrUnFollowUser = async (req, res) => {
     const currentUserData = currentUserSnapshot.docs[0].data();
 
     const verifyUserToFollowRelationShip = userToFollowData.relationShips.some(
-      (obj) => obj["username"] === currentUserData.username
+      (obj) => {
+        if (
+          obj["username"] === currentUserData.username &&
+          obj["relationShip_type"] === "follower"
+        )
+          return true;
+        else false;
+      }
     );
-
     const updateBothUsers = async (
       usertoupdate,
       fieldtoupdate,
       relationshiptoupdate,
       usertoupdaterelationshipwith,
-      operationtoexecute
     ) => {
       await updateDoc(usertoupdate.docs[0].ref, {
-        fieldtoupdate: eval(`${operationtoexecute} 1`),
-        relationShips: [
-          {
-            username: usertoupdaterelationshipwith,
-            relationShip_type: relationshiptoupdate,
-          },
-        ],
+        [fieldtoupdate]: increment(1),
+        relationShips: arrayUnion({
+          username: usertoupdaterelationshipwith,
+          relationShip_type: relationshiptoupdate,
+        },)
       });
     };
 
     const deleteRelationShip = async (
       usertoupdate,
-      _fieldtoupdate,
+      fieldtoupdate,
       operationtoexecute,
-      relationshipToDelete
+      relationshipToDelete,
+      usertoupdaterelationshipwith
     ) => {
       await updateDoc(usertoupdate.docs[0].ref, {
-        _fieldtoupdate: eval(`${operationtoexecute} 1`),
-        relationShips: usertoupdate.docs[0]
-          .data()
-          .relationShips.filter((relationship) => {
-            return relationship.username !== relationshipToDelete;
-          }),
+        [fieldtoupdate]: increment(-1),
+        relationShips: arrayRemove({
+          username: usertoupdaterelationshipwith,
+          relationShip_type: relationshipToDelete,
+        },)
       });
     };
 
@@ -72,15 +79,13 @@ exports.FollowOrUnFollowUser = async (req, res) => {
         "number_of_followers",
         "follower",
         currentUserData.username,
-        "+"
       );
 
       await updateBothUsers(
         currentUserSnapshot,
-        " number_of_following",
+        "number_of_following",
         "following",
         userToFollowData.username,
-        "+"
       );
 
       res.json({
@@ -91,18 +96,20 @@ exports.FollowOrUnFollowUser = async (req, res) => {
         userToFollowSnapshot,
         "number_of_followers",
         "-",
-        currentUserData.username
+        "follower",
+        currentUserData.username,
       );
 
       await deleteRelationShip(
         currentUserSnapshot,
         "number_of_following",
         "-",
-        userToFollowData.username
+        "following",
+        userToFollowData.username,
       );
 
       res.json({
-        message: "already following this user",
+        message: "already following this user, unfollowing now...",
       });
     }
   } catch (err) {
