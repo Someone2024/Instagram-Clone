@@ -7,7 +7,7 @@ const {
   arrayRemove,
   arrayUnion,
 } = require("firebase/firestore");
-const { UsersRef } = require("../../FirebaseApp");
+const { UsersRef } = require("../../../FirebaseApp");
 
 exports.BlockOrUnBlockUser = async (req, res) => {
   const currentUser = req.username;

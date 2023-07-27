@@ -1,6 +1,6 @@
 const { getDocs, query, where, limit } = require("firebase/firestore");
-const jwtController = require("../jwtController");
-const { UsersRef } = require("../../FirebaseApp");
+const jwtController = require("../../jwtController");
+const { UsersRef } = require("../../../FirebaseApp");
 
 exports.Login = async (req, res) => {
   const { email, password } = req.body;

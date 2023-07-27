@@ -9,7 +9,7 @@ const {
   increment,
   
 } = require("firebase/firestore");
-const { UsersRef } = require("../../FirebaseApp");
+const { UsersRef } = require("../../../FirebaseApp");
 
 exports.FollowOrUnFollowUser = async (req, res) => {
   const currentUser = req.username;

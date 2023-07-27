@@ -1,6 +1,6 @@
 const { getDocs, query, where, collection } = require("firebase/firestore");
-const { UsersRef } = require("../../FirebaseApp");
-const createUser = require("../../models/User");
+const { UsersRef } = require("../../../FirebaseApp");
+const createUser = require("../../../models/User");
 
 exports.Register = async (req, res) => {
   const { email, full_name, username, password } = req.body;

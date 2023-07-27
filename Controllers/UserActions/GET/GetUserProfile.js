@@ -1,5 +1,5 @@
 const { getDocs, query, where, limit } = require("firebase/firestore");
-const { UsersRef } = require("../../FirebaseApp");
+const { UsersRef } = require("../../../FirebaseApp");
 
 exports.GetUserProfile = async (req, res) => {
   const userToGet = req.params.username;
