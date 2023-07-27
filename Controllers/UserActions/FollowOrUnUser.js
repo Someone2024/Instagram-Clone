@@ -1,5 +1,4 @@
 const {
-  collection,
   updateDoc,
   getDocs,
   query,
