@@ -15,12 +15,7 @@ async function createUser(email, full_name, username, password) {
       number_of_followers: 0,
       number_of_posts: 0,
       liked_posts: [],
-      relationShips: [
-        {
-          userID: "Example",
-          relationShip_type: "example",
-        },
-      ],
+      relationShips: [],
       privacySettings: {
         private: false,
         posts: "",
