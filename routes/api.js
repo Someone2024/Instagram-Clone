@@ -10,6 +10,6 @@ router.get("/:username", checkAuh, userController.UserProfile)
 router.post("/register", userController.Register);
 router.post("/login", userController.Login);
 
-router.post("/:username/follow", checkAuh, userController.FollowUser)
+router.post("/:username/follow", checkAuh, userController.FollowOrUnFollowUser)
 
 module.exports = router;
