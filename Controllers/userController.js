@@ -12,4 +12,6 @@ exports.GetUserProfile = GetUserProfile;
 
 exports.FollowOrUnFollowUser = FollowOrUnFollowUser;
 
-exports.BlockOrUnUser = BlockOrUnBlockUser;
+exports.BlockOrUnBlockUser = BlockOrUnBlockUser;
+
+//TODO: retrieve information based on user privacy settings and relationship of type blocked
