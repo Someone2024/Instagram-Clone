@@ -4,7 +4,7 @@ const userController = require("../Controllers/userController")
 const checkAuh = require("../Controllers/checkAuth")
 
 //GET Requests
-router.get("/:username", checkAuh, userController.UserProfile)
+router.get("/:username", checkAuh, userController.GetUserProfile)
 
 //POST Requests
 router.post("/register", userController.Register);
