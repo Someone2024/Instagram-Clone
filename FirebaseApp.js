@@ -15,12 +15,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
-const storage = getStorage()
+const storage = getStorage(app)
 
 const UsersRef = collection(db, "Users");
-const userProfileImages = ref(storage, "images")
 
 module.exports = {
     db,
-    UsersRef
+    UsersRef,
+    storage
 }
