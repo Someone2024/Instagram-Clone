@@ -4,7 +4,7 @@ const { FollowOrUnFollowUser } = require("./UserActions/POST/FollowOrUnUser");
 const { GetUserProfile } = require("./UserActions/GET/GetUserProfile");
 const { BlockOrUnBlockUser } = require("./UserActions/POST/BlockOrUnUser");
 const { UpdateUserPrivacy } = require("./UserActions/PUT/UpdateUserPrivacy");
-const { UpdateUserProfile } = require("./UserActions/PUT/UpdateUserProfile");
+const { UpdateUserProfilePicture } = require("./UserActions/PUT/UpdateUserProfilePicture");
 
 exports.Register = Register;
 
@@ -18,4 +18,4 @@ exports.BlockOrUnBlockUser = BlockOrUnBlockUser;
 
 exports.UpdateUserPrivacy = UpdateUserPrivacy;
 
-exports.UpdateUserProfile = UpdateUserProfile;
+exports.UpdateUserProfilePicture = UpdateUserProfilePicture;
