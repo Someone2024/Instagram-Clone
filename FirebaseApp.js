@@ -18,9 +18,11 @@ const db = getFirestore(app)
 const storage = getStorage(app)
 
 const UsersRef = collection(db, "Users");
+const PostsRef = collection(db, "Posts");
 
 module.exports = {
     db,
     UsersRef,
+    PostsRef,
     storage
 }
