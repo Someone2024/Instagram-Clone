@@ -1,19 +1,21 @@
 const { db } = require("../FirebaseApp");
 const { collection, addDoc, Firestore } = require("firebase/firestore");
-const { ui } = require("uid");
+const { uid } = require("uid");
 
-async function CreatePost(file) {
+async function CreatePost(file_url, type, author ) {
   try {
-    postRef = await addDoc(collection(db, "Users"), {
-      id: ui(),
-      file,
-      type: "",
+    postRef = await addDoc(collection(db, "Posts"), {
+      id: uid(),
+      author,
+      file_url,
+      type,
       timestamp: new Date(),
-      number_of_likes: "",
-      number_of_comments: "reference comments with the id",
-      author: "reference an author",
+      number_of_likes: 0,
+      number_of_comments: 0,
     });
+
     console.log("Document written with ID: ", postRef.id);
+    return postRef
   } catch (e) {
     console.error("Error adding document: ", e);
   }
