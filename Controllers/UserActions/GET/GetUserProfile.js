@@ -34,7 +34,21 @@ exports.GetUserProfile = async (req, res) => {
       }
     );
 
-    if (userToGetData.privacySettings.private_account) {
+    const compareCurrentUserToUserToGet = () => {
+      return currentUser == userToGet
+    }
+
+    if(compareCurrentUserToUserToGet){
+      res.json({
+        userName: userToGetData.username,
+        userBio: userToGetData.bio,
+        profile_picture: userToGetData.profile_picture,
+        number_of_posts: userToGetData.number_of_posts,
+        number_of_followers: userToGetData.number_of_followers,
+        number_of_following: userToGetData.number_of_following,
+      });
+    }
+    else if (userToGetData.privacySettings.private_account) {
       res.json({
         userName: userToGetData.username,
         error: "This Account is private",
@@ -54,5 +68,9 @@ exports.GetUserProfile = async (req, res) => {
         number_of_following: userToGetData.number_of_following,
       });
     }
-  } catch (e) {}
+  } catch (e) {
+    res.status(400).json({
+      Message: "User is either not found or not existant"
+    });
+  }
 };
