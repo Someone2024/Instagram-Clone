@@ -40,6 +40,7 @@ exports.GetUserProfile = async (req, res) => {
 
     if(compareCurrentUserToUserToGet){
       res.json({
+        User: "This is the current user",
         userName: userToGetData.username,
         userBio: userToGetData.bio,
         profile_picture: userToGetData.profile_picture,
