@@ -28,6 +28,8 @@ exports.Upload = async (req, res) => {
   const {type} = req.params
   if (!file) {
     return res.status(400).json({ error: "No video file uploaded" });
+  }else if(!["video", "media", "reel", "story"].includes(type)){
+    return res.status(400).json({ error: "File type not specified" });
   }
   try {
     // Upload video file to Firebase Storage
