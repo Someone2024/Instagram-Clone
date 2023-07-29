@@ -48,6 +48,7 @@ exports.GetUserProfile = async (req, res) => {
       res.json({
         userName: userToGetData.username,
         userBio: userToGetData.bio,
+        profile_picture: userToGetData.profile_picture,
         number_of_posts: userToGetData.number_of_posts,
         number_of_followers: userToGetData.number_of_followers,
         number_of_following: userToGetData.number_of_following,
