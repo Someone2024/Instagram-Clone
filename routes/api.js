@@ -22,6 +22,8 @@ router.post("/login", userController.Login);
 router.post("/:username/follow", checkAuh, userController.FollowOrUnFollowUser);
 router.post("/:username/block", checkAuh, userController.BlockOrUnBlockUser);
 
+router.post("/upload/", upload.single("post"), checkAuh, userController.Upload);
+
 //PUT requests
 router.put(
   "/settings/profile/picture",
