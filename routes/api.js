@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage,});
+const upload = multer({ storage: storage });
 
 //GET Requests
 router.get("/:username", checkAuh, userController.GetUserProfile);
@@ -22,7 +22,12 @@ router.post("/login", userController.Login);
 router.post("/:username/follow", checkAuh, userController.FollowOrUnFollowUser);
 router.post("/:username/block", checkAuh, userController.BlockOrUnBlockUser);
 
-router.post("/upload/:type", upload.single("post"), checkAuh, userController.Upload);
+router.post(
+  "/upload/:type",
+  upload.single("post"),
+  checkAuh,
+  userController.Upload
+);
 
 //PUT requests
 router.put(
@@ -31,7 +36,14 @@ router.put(
   checkAuh,
   userController.UpdateUserProfilePicture
 );
-router.put("/settings/profile/privacy", checkAuh, userController.UpdateUserPrivacy);
+router.put(
+  "/settings/profile/privacy",
+  checkAuh,
+  userController.UpdateUserPrivacy
+);
 router.put("/settings/profile", checkAuh, userController.UpdateUserProfile);
+
+//DELETE requests
+router.delete("/delete/:postid", checkAuh, userController.DeletePost)
 
 module.exports = router;
