@@ -4,13 +4,13 @@ const userController = require("../Controllers/userController");
 const checkAuh = require("../Controllers/checkAuth");
 const multer = require("multer");
 const storage = multer.diskStorage({
-    destination: 'uploads/',
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    },
-  });
-  
-  const upload = multer({ storage: storage });
+  destination: "uploads/",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage,});
 
 //GET Requests
 router.get("/:username", checkAuh, userController.GetUserProfile);
@@ -23,7 +23,12 @@ router.post("/:username/follow", checkAuh, userController.FollowOrUnFollowUser);
 router.post("/:username/block", checkAuh, userController.BlockOrUnBlockUser);
 
 //PUT requests
-router.put("/settings/profile/picture", upload.single("file"), checkAuh, userController.UpdateUserProfilePicture);
+router.put(
+  "/settings/profile/picture",
+  upload.single("file"),
+  checkAuh,
+  userController.UpdateUserProfilePicture
+);
 router.put("/settings/privacy", checkAuh, userController.UpdateUserPrivacy);
 
 module.exports = router;
