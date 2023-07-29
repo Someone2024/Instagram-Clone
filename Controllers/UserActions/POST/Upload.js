@@ -2,7 +2,13 @@ const multer = require("multer");
 const admin = require("firebase-admin");
 const serviceAccount = require("./credentials/serviceAccountKey.json");
 const upload = multer({ dest: "videos/" });
-const {fs, unlinkSync} = require("fs")
+const {fs, unlinkSync} = require("fs");
+const { getDownloadURL, ref } = require("firebase/storage");
+const {storage} = require("../../../FirebaseApp")
+const CreatePost = require("../../../models/Post");
+const { updateDoc, increment } = require("firebase/firestore");
+const { getDocs, query, where, limit, } = require("firebase/firestore");
+const { UsersRef } = require("../../../FirebaseApp");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -13,6 +19,13 @@ const bucket = admin.storage().bucket();
 
 exports.Upload = async (req, res) => {
   const file = req.file;
+  const author = req.username;
+  const authorQuery = query(
+    UsersRef,
+    where("username", "==", author),
+    limit(1)
+  )
+  const {type} = req.params
   if (!file) {
     return res.status(400).json({ error: "No video file uploaded" });
   }
@@ -21,21 +34,28 @@ exports.Upload = async (req, res) => {
     const fileUploadOptions = {
       destination: 'videos/' + file.originalname,
       metadata: {
-        contentType: file.mimetype,
+        contentType: ".png",
       },
     };
+    const currentAuthor = await getDocs(authorQuery);
 
     await bucket.upload(file.path, fileUploadOptions);
 
-    // Get the publicly accessible URL of the uploaded video
-    const uploadedFile = await bucket.file(fileUploadOptions.destination).get();
-    const fileUrl = uploadedFile[0].metadata.mediaLink;
+    //download the file
+    const finalUrl = ref(storage, 'videos/' + file.originalname) 
+    const file_url = await getDownloadURL(finalUrl)
+
+    const newPost = await CreatePost(file_url, type, author)
+
+    await updateDoc(currentAuthor.docs[0].ref, {
+      number_of_posts: increment(1)
+    })
 
     // Delete the temporary file on the server after successful upload
     unlinkSync(file.path);
 
     // Return the URL to the client
-    return res.json({ url: fileUrl });
+    res.json({ newPost: file_url });
   } catch (error) {
     console.error('Error uploading video:', error);
     return res.status(500).json({ error: 'Failed to upload video' });
