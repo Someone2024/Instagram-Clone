@@ -30,5 +30,6 @@ router.put(
   userController.UpdateUserProfilePicture
 );
 router.put("/settings/profile/privacy", checkAuh, userController.UpdateUserPrivacy);
+router.put("/settings/profile", checkAuh, userController.UpdateUserProfile);
 
 module.exports = router;
