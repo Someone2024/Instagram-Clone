@@ -5,6 +5,7 @@ const { GetUserProfile } = require("./UserActions/GET/GetUserProfile");
 const { BlockOrUnBlockUser } = require("./UserActions/POST/BlockOrUnUser");
 const { UpdateUserPrivacy } = require("./UserActions/PUT/UpdateUserPrivacy");
 const { UpdateUserProfilePicture } = require("./UserActions/PUT/UpdateUserProfilePicture");
+const { UpdateUserProfile } = require("./UserActions/PUT/UpdateUserProfile");
 
 exports.Register = Register;
 
@@ -19,3 +20,5 @@ exports.BlockOrUnBlockUser = BlockOrUnBlockUser;
 exports.UpdateUserPrivacy = UpdateUserPrivacy;
 
 exports.UpdateUserProfilePicture = UpdateUserProfilePicture;
+
+exports.UpdateUserProfile = UpdateUserProfile;
