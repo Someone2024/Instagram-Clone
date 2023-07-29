@@ -1,15 +1,23 @@
-const { getDocs, query, where, limit } = require("firebase/firestore");
-const { UsersRef } = require("../../../FirebaseApp");
+const { getDocs, query, where, limit, orderBy } = require("firebase/firestore");
+const { UsersRef, PostsRef } = require("../../../FirebaseApp");
 
 exports.GetUserProfile = async (req, res) => {
   const userToGet = req.params.username;
   const currentUser = req.username
+  const compareCurrentUserToUserToGet = currentUser === userToGet
+  console.log({currentUser, userToGet})
 
   const userToGetQuery = query(
     UsersRef,
     where("username", "==", userToGet),
     limit(1)
   );
+
+  const userToGetPostsQuery = query(
+    PostsRef,
+    where("author", "==", userToGet),
+    orderBy("timestamp", "desc")
+  )
 
   const currentUserQuery = query(
     UsersRef,
@@ -20,6 +28,11 @@ exports.GetUserProfile = async (req, res) => {
     const userToGet = await getDocs(userToGetQuery);
     const userToGetData = userToGet.docs[0].data();
 
+    const userToGetPosts = await getDocs(userToGetPostsQuery);
+    const userToGetActualPosts = [];
+    userToGetPosts.forEach((postDoc) => {
+      userToGetActualPosts.unshift(postDoc.data());
+    });
     const currentUser = await getDocs(currentUserQuery);
     const currentUserData = currentUser.docs[0].data();
 
@@ -34,19 +47,16 @@ exports.GetUserProfile = async (req, res) => {
       }
     );
 
-    const compareCurrentUserToUserToGet = () => {
-      return currentUser == userToGet
-    }
-
     if(compareCurrentUserToUserToGet){
       res.json({
-        User: "This is the current user",
+        isCurrentUser: compareCurrentUserToUserToGet,
         website: userToGetData.website,
         userName: userToGetData.username,
         userBio: userToGetData.bio,
         number_of_posts: userToGetData.number_of_posts,
         number_of_followers: userToGetData.number_of_followers,
         number_of_following: userToGetData.number_of_following,
+        posts: userToGetActualPosts,
         profile_picture: userToGetData.profile_picture,
       });
     }
@@ -62,15 +72,18 @@ exports.GetUserProfile = async (req, res) => {
     }
     else {
       res.json({
+        isCurrentUser: compareCurrentUserToUserToGet,
+        website: userToGetData.website,
         userName: userToGetData.username,
         userBio: userToGetData.bio,
-        website: userToGetData.website,
-        profile_picture: userToGetData.profile_picture,
         number_of_posts: userToGetData.number_of_posts,
         number_of_followers: userToGetData.number_of_followers,
         number_of_following: userToGetData.number_of_following,
+        posts: userToGetActualPosts,
+        profile_picture: userToGetData.profile_picture,
       });
     }
+
   } catch (e) {
     res.status(400).json({
       Message: "User is either not found or not existant"
