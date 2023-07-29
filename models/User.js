@@ -10,6 +10,7 @@ async function createUser(email, full_name, username, password) {
       username,
       password: await jwtController.hashPassword(password),
       bio: "",
+      website: "",
       profile_picture: "",
       number_of_following: 0,
       number_of_followers: 0,
