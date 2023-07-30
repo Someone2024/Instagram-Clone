@@ -7,26 +7,34 @@ const { Upload } = require("./UserActions/POST/Upload");
 const { UpdateUserPrivacy } = require("./UserActions/PUT/UpdateUserPrivacy");
 const { UpdateUserProfilePicture } = require("./UserActions/PUT/UpdateUserProfilePicture");
 const { UpdateUserProfile } = require("./UserActions/PUT/UpdateUserProfile");
+const { LikePost } = require("./UserActions/PUT/LikePost");
 const { DeletePost } = require("./UserActions/DELETE/DeletePost");
 const { DeleteUserAccount } = require("./UserActions/DELETE/DeleteUserAccount");
+
+//GET requests
+exports.GetUserProfile = GetUserProfile;
+
+//POST requests
+exports.FollowOrUnFollowUser = FollowOrUnFollowUser;
+
+exports.BlockOrUnBlockUser = BlockOrUnBlockUser;
+
+exports.Upload = Upload;
 
 exports.Register = Register;
 
 exports.Login = Login;
 
-exports.GetUserProfile = GetUserProfile;
-
-exports.FollowOrUnFollowUser = FollowOrUnFollowUser;
-
-exports.BlockOrUnBlockUser = BlockOrUnBlockUser;
-
+//PUT requests
 exports.UpdateUserPrivacy = UpdateUserPrivacy;
 
 exports.UpdateUserProfilePicture = UpdateUserProfilePicture;
 
 exports.UpdateUserProfile = UpdateUserProfile;
 
-exports.Upload = Upload;
+exports.LikePost = LikePost;
+
+//DELETE requests
 
 exports.DeletePost = DeletePost;
 
