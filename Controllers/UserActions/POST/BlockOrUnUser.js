@@ -97,7 +97,7 @@ exports.BlockOrUnBlockUser = async (req, res) => {
       );
 
       res.json({
-        message: "already bloked this user",
+        message: "already bloked this user. unblocking now",
       });
     }
   } catch (err) {
