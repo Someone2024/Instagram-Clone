@@ -1,10 +1,9 @@
 const { Upload } = require("./UserActions/POST/Upload");
-const { LikePost } = require("./UserActions/PUT/LikePost");
+const { LikeAndDislikePost } = require("./UserActions/PUT/LikeAndDislikePost");
 const { DeletePost } = require("./UserActions/DELETE/DeletePost");
 
 
 //GET requests
-// exports.GetPost = GetPost;
 
 //POST requests
 
@@ -12,7 +11,7 @@ exports.Upload = Upload;
 
 //PUT requests
 
-exports.LikePost = LikePost;
+exports.LikeAndDislikePost = LikeAndDislikePost;
 
 //DELETE requests
 
