@@ -10,7 +10,7 @@ const {
   arrayRemove,
 } = require("firebase/firestore");
 
-exports.LikePost = async (req, res) => {
+exports.LikeAndDislikePost = async (req, res) => {
   const PostId = req.params.postid;
   const currentUser = req.username;
   const PostToUpdateQuery = query(
