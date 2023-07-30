@@ -30,8 +30,6 @@ exports.DeleteUserAccount = async (req, res) => {
         const hasRelation = updatedArray.some(obj => obj["username"] === userToDelete.data().username)
         if(hasRelation){
             const filteredArray = updatedArray.filter(relation => relation.username !== currentUser)
-            console.log(updatedArray)
-            console.log(filteredArray)
             await updateDoc(relation.ref, {
                 relationShips: filteredArray
             })
@@ -45,6 +43,3 @@ exports.DeleteUserAccount = async (req, res) => {
     })
   }
 };
-
-//Todo: Delete relationships with the userToDelete from other users
-//The relationships with user to delete query is not returning anything
