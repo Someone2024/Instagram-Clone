@@ -45,5 +45,6 @@ router.put("/settings/profile", checkAuh, userController.UpdateUserProfile);
 
 //DELETE requests
 router.delete("/delete/:postid", checkAuh, userController.DeletePost)
+router.delete("/settings/delete-account", checkAuh, userController.DeleteUserAccount)
 
 module.exports = router;
