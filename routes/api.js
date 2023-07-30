@@ -30,6 +30,7 @@ router.post(
 );
 
 //PUT requests
+router.put("/:postid/like", checkAuh, userController.LikePost);
 router.put(
   "/settings/profile/picture",
   upload.single("file"),
