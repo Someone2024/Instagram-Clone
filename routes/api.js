@@ -45,7 +45,7 @@ router.put(
 router.put("/settings/profile", checkAuh, userController.UpdateUserProfile);
 
 //DELETE requests
-router.delete("/delete/:postid", checkAuh, userController.DeletePost)
+router.delete("/delete/post/:postid", checkAuh, userController.DeletePost)
 router.delete("/settings/delete-account", checkAuh, userController.DeleteUserAccount)
 router.delete("/delete/comment/:commentid", checkAuh, userController.DeleteComment)
 
