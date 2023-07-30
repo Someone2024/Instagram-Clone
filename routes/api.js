@@ -21,7 +21,7 @@ router.post("/login", userController.Login);
 
 router.post("/:username/follow", checkAuh, userController.FollowOrUnFollowUser);
 router.post("/:username/block", checkAuh, userController.BlockOrUnBlockUser);
-
+router.post("/:postid/comment", checkAuh, userController.CommentPost);
 router.post(
   "/upload/:type",
   upload.single("post"),
@@ -47,5 +47,6 @@ router.put("/settings/profile", checkAuh, userController.UpdateUserProfile);
 //DELETE requests
 router.delete("/delete/:postid", checkAuh, userController.DeletePost)
 router.delete("/settings/delete-account", checkAuh, userController.DeleteUserAccount)
+router.delete("/delete/comment/:commentid", checkAuh, userController.DeleteComment)
 
 module.exports = router;
