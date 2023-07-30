@@ -10,14 +10,14 @@ exports.Register = async (req, res) => {
 
     if (usersSnapshot.empty) {
       const user = await createUser(email, full_name, username, password);
+      res.json({
+        message: "User Created!",
+      });
     } else {
       res.json({
         Error: "That username has already been taken",
       });
     }
-    res.json({
-      message: "Success",
-    });
   } catch (e) {
     res.json({
       message: "error" + e,
