@@ -8,6 +8,7 @@ const { UpdateUserPrivacy } = require("./UserActions/PUT/UpdateUserPrivacy");
 const { UpdateUserProfilePicture } = require("./UserActions/PUT/UpdateUserProfilePicture");
 const { UpdateUserProfile } = require("./UserActions/PUT/UpdateUserProfile");
 const { DeletePost } = require("./UserActions/DELETE/DeletePost");
+const { DeleteUserAccount } = require("./UserActions/DELETE/DeleteUserAccount");
 
 exports.Register = Register;
 
@@ -25,6 +26,8 @@ exports.UpdateUserProfilePicture = UpdateUserProfilePicture;
 
 exports.UpdateUserProfile = UpdateUserProfile;
 
+exports.Upload = Upload;
+
 exports.DeletePost = DeletePost;
 
-exports.Upload = Upload;
+exports.DeleteUserAccount = DeleteUserAccount;
