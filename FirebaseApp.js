@@ -19,10 +19,12 @@ const storage = getStorage(app)
 
 const UsersRef = collection(db, "Users");
 const PostsRef = collection(db, "Posts");
+const CommentsRef = collection(db, "Comments");
 
 module.exports = {
     db,
     UsersRef,
     PostsRef,
+    CommentsRef,
     storage
 }
