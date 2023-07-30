@@ -1,7 +1,7 @@
 const  fs  = require("fs/promises");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
-const handleFile = upload.single("file")
+// const handleFile = upload.single("file")
 const {
   query,
   where,
@@ -35,9 +35,9 @@ exports.UpdateUserProfilePicture = async (req, res) => {
   if (!allowedMimeTypes.includes(req.file.mimetype)) {
     res.json({
       message: "Error file format",
-      f: fileData
     })
     await fs.rm(`${fileData.path}`)
+    return
   } 
 
   try {
