@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../Controllers/userController");
-const postController = require("../Controllers/userController");
-const commentController = require("../Controllers/userController");
+const postController = require("../Controllers/postController");
+const commentController = require("../Controllers/commentController");
 
 const checkAuth = require("../Controllers/checkAuth");
 const multer = require("multer");
@@ -29,20 +29,19 @@ router.post("/users/register", userController.Register);
 router.post("/users/login", userController.Login);
 router.post("/users/:username/follow", checkAuth, userController.FollowOrUnFollowUser);
 router.post("/users/:username/block", checkAuth, userController.BlockOrUnBlockUser);
-router.post("/users/:postid/like", checkAuth, userController.LikeAndDislikePost);
 router.post("/users/:postid/comment", checkAuth, commentController.CommentPost);
+router.post("/users/:postid/like", checkAuth, postController.LikeAndDislikePost);
 
 router.post("/users/upload/:type", upload.single("post"), checkAuth, postController.Upload);
 
 // PUT Requests
-router.put("/users/:username/settings/profile", checkAuth, userController.UpdateUserProfile);
-router.put("/users/:username/settings/profile-picture", checkAuth, userController.UpdateUserProfilePicture);
-
-router.put("/users/:username/settings/privacy", checkAuth, userController.UpdateUserPrivacy);
+router.put("/users/settings/profile", checkAuth, userController.UpdateUserProfile);
+// router.put("/users/settings/profile-picture", checkAuth, userController.UpdateUserProfilePicture);
+router.put("/users/settings/privacy", checkAuth, userController.UpdateUserPrivacy);
 
 // DELETE Requests
-router.delete("/users/:username/posts/:postid", checkAuth, postController.DeletePost);
+router.delete("/users/posts/delete/:postid", checkAuth, postController.DeletePost);
 router.delete("/users/settings/delete-account", checkAuth, userController.DeleteUserAccount);
-router.delete("/users/:postid/delete/comment/:commentid", checkAuth, commentController.DeleteComment);
+router.delete("/users/delete/comment/:commentid", checkAuth, commentController.DeleteComment);
 
 module.exports = router;
