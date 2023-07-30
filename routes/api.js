@@ -36,7 +36,7 @@ router.post("/users/upload/:type", upload.single("post"), checkAuth, postControl
 
 // PUT Requests
 router.put("/users/settings/profile", checkAuth, userController.UpdateUserProfile);
-// router.put("/users/settings/profile-picture", checkAuth, userController.UpdateUserProfilePicture);
+router.put("/users/settings/profile-picture",upload.single("picture"), checkAuth, userController.UpdateUserProfilePicture);
 router.put("/users/settings/privacy", checkAuth, userController.UpdateUserPrivacy);
 
 // DELETE Requests
