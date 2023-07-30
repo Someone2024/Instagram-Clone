@@ -30,8 +30,6 @@ exports.UpdateUserProfilePicture = UpdateUserProfilePicture;
 
 exports.UpdateUserProfile = UpdateUserProfile;
 
-exports.LikePost = LikePost;
-
 //DELETE requests
 
 exports.DeleteUserAccount = DeleteUserAccount; //Delete comments associated with the user
