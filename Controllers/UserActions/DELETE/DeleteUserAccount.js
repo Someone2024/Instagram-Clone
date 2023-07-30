@@ -8,7 +8,7 @@ const {
   updateDoc,
   increment,
 } = require("firebase/firestore");
-const { UsersRef, PostsRef } = require("../../../FirebaseApp");
+const { UsersRef, PostsRef, CommentsRef } = require("../../../FirebaseApp");
 
 exports.DeleteUserAccount = async (req, res) => {
   const currentUser = req.username;
@@ -21,14 +21,23 @@ exports.DeleteUserAccount = async (req, res) => {
     PostsRef,
     where("author", "==", currentUser)
   );
+  const CommentsToDeleteQuery = query(
+    CommentsRef,
+    where("author", "==", currentUser),
+  );
   const relationshipsWithCurrentUserQuery = query(UsersRef);
   try {
     const userToDelete = (await getDocs(userToDeleteQuery)).docs[0];
     const PostsByUserToDelete = (await getDocs(PostsByUserToDeleteQuery)).docs;
+    const CommentsToDelete = (await getDocs(CommentsToDeleteQuery)).docs;
     const relationshipsWithCurrentUser = await getDocs(
       relationshipsWithCurrentUserQuery
     );
     PostsByUserToDelete.forEach(async (post) => await deleteDoc(post.ref));
+    
+    if(CommentsToDelete) {
+      CommentsToDelete.forEach(async comment => await deleteDoc(comment.ref))
+    }
 
     res.json({
       message:
