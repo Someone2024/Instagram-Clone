@@ -2,6 +2,7 @@ const { GetUserProfile } = require("./UserActions/GET/GetUserProfile");
 const { GetUserSinglePosts } = require("./UserActions/GET/GetUserSinglePosts");
 const { GetSuggestedUsers } = require("./UserActions/GET/GetSuggestedUsers");
 const { GetInfiniteFeedPosts } = require("./UserActions/GET/GetInfiniteFeedPosts");
+const { SearchUsers } = require("./UserActions/GET/SearchUsers");
 
 const { Register } = require("./UserActions/POST/RegisterUser");
 const { Login } = require("./UserActions/POST/LoginUser");
@@ -22,6 +23,8 @@ exports.GetSuggestedUsers = GetSuggestedUsers;
 exports.GetUserSinglePosts = GetUserSinglePosts
 
 exports.GetInfiniteFeedPosts = GetInfiniteFeedPosts
+
+exports.SearchUsers = SearchUsers
 
 //POST requests
 exports.FollowOrUnFollowUser = FollowOrUnFollowUser;

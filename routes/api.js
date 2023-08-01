@@ -15,16 +15,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // GET Requests
-router.get("/:limit", checkAuth, userController.GetInfiniteFeedPosts); // <= Todo, the limit would be 5
+
+router.get("/:limit", checkAuth, userController.GetInfiniteFeedPosts); // <= the limit would be 5
 // router.get("/explore/:limit", checkAuth, userController.GetInfiniteScrollPosts);
-// router.get("/search/users", checkAuth, userController.SearchUsers);
+
+router.get("/search/users", checkAuth, userController.SearchUsers);
 router.get("/users/:username", checkAuth, userController.GetUserProfile);
+
 router.get("/posts/:postid", checkAuth, userController.GetUserSinglePosts);
-// router.get("/users/:username/posts", checkAuth, userController.GetUserPosts); <= not needed for now
+// router.get("/users/:username/posts", checkAuth, userController.GetUserPosts);
 // router.get("/posts/comments/:postid", checkAuth, userController.GetCommentsByPost); <= not needed for now
 router.get("/users/:username/suggested", checkAuth, userController.GetSuggestedUsers);
-// router.get("/users/:username/interactions/likes", checkAuth, userController.GetLikedPosts); <= not needed for now
-// router.get("/users/:username/interactions/likes", checkAuth, userController.GetCommentedPosts); <= not needed for now
+// router.get("/users/:username/interactions/likes", checkAuth, userController.GetLikedPosts);
+// router.get("/users/:username/interactions/comments", checkAuth, userController.GetCommentedPosts);
 // router.get("/reels/:reelid", checkAuth, userController.GetReelPost); <= not needed for now
 
 // POST Requests
