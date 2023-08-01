@@ -1,4 +1,5 @@
 const { GetUserProfile } = require("./UserActions/GET/GetUserProfile");
+const { GetUserSinglePosts } = require("./UserActions/GET/GetUserSinglePosts");
 
 const { Register } = require("./UserActions/POST/RegisterUser");
 const { Login } = require("./UserActions/POST/LoginUser");
@@ -13,6 +14,7 @@ const { DeleteUserAccount } = require("./UserActions/DELETE/DeleteUserAccount");
 
 //GET requests
 exports.GetUserProfile = GetUserProfile;
+exports.GetUserSinglePosts = GetUserSinglePosts
 
 //POST requests
 exports.FollowOrUnFollowUser = FollowOrUnFollowUser;
