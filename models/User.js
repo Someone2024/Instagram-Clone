@@ -11,7 +11,7 @@ async function createUser(email, full_name, username, password) {
       password: await jwtController.hashPassword(password),
       bio: "",
       website: "",
-      profile_picture: "",
+      profile_picture: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
       number_of_following: 0,
       number_of_followers: 0,
       number_of_posts: 0,
