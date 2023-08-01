@@ -16,23 +16,23 @@ const upload = multer({ storage: storage });
 
 // GET Requests
 router.get("/users/:username", checkAuth, userController.GetUserProfile);
-router.get("/users/:username/posts", checkAuth, userController.GetUserPosts);
 router.get("/posts/:postid", checkAuth, userController.GetUserSinglePosts);
-router.get("/posts/comments/:postid", checkAuth, userController.GetCommentsByPost);
+// router.get("/users/:username/posts", checkAuth, userController.GetUserPosts); <= not needed for now
+// router.get("/posts/comments/:postid", checkAuth, userController.GetCommentsByPost); <= not needed for now
 router.get("/users/:username/suggested", checkAuth, userController.GetSuggestedUsers);
-router.get("/users/:username/interactions/likes", checkAuth, userController.GetLikedPosts);
-router.get("/users/:username/interactions/likes", checkAuth, userController.GetCommentedPosts);
-router.get("/explore/:limit", checkAuth, userController.GetInfiniteScrollPosts);
-router.get("/reels/:reelid", checkAuth, userController.GetReelPost);
-router.get("/search/users", checkAuth, userController.SearchUsers);
+// router.get("/users/:username/interactions/likes", checkAuth, userController.GetLikedPosts);
+// router.get("/users/:username/interactions/likes", checkAuth, userController.GetCommentedPosts);
+// router.get("/explore/:limit", checkAuth, userController.GetInfiniteScrollPosts);
+// router.get("/reels/:reelid", checkAuth, userController.GetReelPost);
+// router.get("/search/users", checkAuth, userController.SearchUsers);
 
 // POST Requests
 router.post("/users/register", userController.Register);
 router.post("/users/login", userController.Login);
 router.post("/users/:username/follow", checkAuth, userController.FollowOrUnFollowUser);
 router.post("/users/:username/block", checkAuth, userController.BlockOrUnBlockUser);
-router.post("/users/:postid/comment", checkAuth, commentController.CommentPost);
-router.post("/users/:postid/like", checkAuth, postController.LikeAndDislikePost);
+router.post("/posts/:postid/comment", checkAuth, commentController.CommentPost);
+router.post("/posts/:postid/like", checkAuth, postController.LikeAndDislikePost);
 
 router.post("/users/upload/:type", upload.single("post"), checkAuth, postController.Upload);
 
