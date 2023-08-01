@@ -9,7 +9,7 @@ async function CreateComment(content, postId, author ) {
       content,
       author,
       postId,
-      timestamp: new Date(),
+      date: new Date(),
     });
 
     console.log("Document written with ID: ", commentRef.id);
