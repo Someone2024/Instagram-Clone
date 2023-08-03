@@ -23,11 +23,13 @@ router.get("/search/users", checkAuth, userController.SearchUsers);
 router.get("/users/:username", checkAuth, userController.GetUserProfile);
 
 router.get("/posts/:postid", checkAuth, userController.GetUserSinglePosts);
-// router.get("/users/:username/posts", checkAuth, userController.GetUserPosts);
-// router.get("/posts/comments/:postid", checkAuth, userController.GetCommentsByPost); <= not needed for now
+
 router.get("/users/:username/suggested", checkAuth, userController.GetSuggestedUsers);
-// router.get("/users/:username/interactions/likes", checkAuth, userController.GetLikedPosts);
-// router.get("/users/:username/interactions/comments", checkAuth, userController.GetCommentedPosts);
+
+router.get("/users/interactions/likes", checkAuth, userController.GetUserLikedPosts);
+router.get("/users/interactions/comments", checkAuth, userController.GetUserCommentedPosts);
+
+// router.get("/users/:username/posts", checkAuth, userController.GetUserPosts);<= not needed for now
 // router.get("/reels/:reelid", checkAuth, userController.GetReelPost); <= not needed for now
 
 // POST Requests
@@ -39,6 +41,7 @@ router.post("/posts/:postid/comment", checkAuth, commentController.CommentPost);
 router.post("/posts/:postid/like", checkAuth, postController.LikeAndDislikePost);
 
 router.post("/users/upload/:type", upload.single("post"), checkAuth, postController.Upload);
+//implement caption text for posts of type either video or media
 
 // PUT Requests
 router.put("/users/settings/profile", checkAuth, userController.UpdateUserProfile);
