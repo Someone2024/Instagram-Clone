@@ -26,6 +26,7 @@ exports.Upload = async (req, res) => {
     limit(1)
   )
   const {type} = req.params
+  const {caption} = req.body
   if (!file) {
     return res.status(400).json({ error: "No video file uploaded" });
   }else if(!["video", "media", "reel", "story"].includes(type)){
@@ -47,7 +48,7 @@ exports.Upload = async (req, res) => {
     const finalUrl = ref(storage, 'videos/' + file.originalname) 
     const file_url = await getDownloadURL(finalUrl)
 
-    const newPost = await CreatePost(file_url, type, author)
+    const newPost = await CreatePost(file_url, caption, type, author)
 
     await updateDoc(currentAuthor.docs[0].ref, {
       number_of_posts: increment(1)
