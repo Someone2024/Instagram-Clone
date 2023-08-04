@@ -2,12 +2,13 @@ const { db } = require("../FirebaseApp");
 const { collection, addDoc, Firestore } = require("firebase/firestore");
 const { uid } = require("uid");
 
-async function CreatePost(file_url, type, author ) {
+async function CreatePost(file_url, caption, type, author ) {
   try {
     postRef = await addDoc(collection(db, "Posts"), {
       id: uid(),
       author,
       file_url,
+      caption,
       type,
       timestamp: new Date(),
       number_of_likes: 0,
