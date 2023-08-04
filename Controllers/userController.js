@@ -1,6 +1,9 @@
 const { GetUserProfile } = require("./UserActions/GET/GetUserProfile");
 const { GetUserSinglePosts } = require("./UserActions/GET/GetUserSinglePosts");
 const { GetSuggestedUsers } = require("./UserActions/GET/GetSuggestedUsers");
+const { GetUserPosts  } = require("./UserActions/GET/GetUserPosts");
+const { GetExplorePosts  } = require("./UserActions/GET/GetExplorePosts");
+
 const {
   GetInfiniteFeedPosts,
 } = require("./UserActions/GET/GetInfiniteFeedPosts");
@@ -35,6 +38,10 @@ exports.SearchUsers = SearchUsers;
 exports.GetUserLikedPosts = GetUserLikedPosts;
 
 exports.GetUserCommentedPosts = GetUserCommentedPosts;
+
+exports.GetUserPosts = GetUserPosts;
+
+exports.GetExplorePosts = GetExplorePosts;
 
 //POST requests
 exports.FollowOrUnFollowUser = FollowOrUnFollowUser;
