@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 // GET Requests
 
 router.get("/:limit", checkAuth, userController.GetInfiniteFeedPosts); // <= the limit would be 5
-router.get("/explore/:limit", checkAuth, userController.GetExplorePosts);
+router.get("/explore/:limit", checkAuth, userController.GetExplorePosts); //same for this
 
 router.get("/search/users", checkAuth, userController.SearchUsers);
 router.get("/users/:username", checkAuth, userController.GetUserProfile);
